@@ -1,0 +1,8 @@
+[submodule "new"]
+	path = new
+	url = git://github.com/M4GNV5/libjit.git
+	branch = gsoc
+[submodule "old"]
+	path = old
+	url = git://github.com/M4GNV5/libjit.git
+	branch = pre-gsoc
