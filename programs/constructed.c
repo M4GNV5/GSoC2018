@@ -11,7 +11,7 @@
 
 void build(jit_function_t func, int argc, char **argv)
 {
-	jit_value_t conditions[10];
+	jit_value_t conditions[12];
 
 	jit_ulong *mem = malloc(sizeof(jit_ulong));
 	if(argc >= 2)
