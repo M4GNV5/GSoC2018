@@ -9,6 +9,7 @@
 
 #define const(func, type, val) (jit_value_create_nint_constant(func, jit_type_##type, val))
 #define constl(func, type, val) (jit_value_create_long_constant(func, jit_type_##type, val))
+#define constf(func, val) (jit_value_create_float64_constant(func, jit_type_float64, val))
 
 void build(jit_function_t func, int argc, char **argv);
 void run(jit_function_t func, int argc, char **argv);
