@@ -1,9 +1,9 @@
 # GSoC 2018
 
 This repository acts as the "Work Product Submission" for my [Google Summer of Code](https://summerofcode.withgoogle.com/) 2018 project.
-[My project](https://summerofcode.withgoogle.com/projects/#4596557656096768) was implementing a register allocator for [libjit](https://www.gnu.org/software/libjit/). Register allocation is the process of determining which variables of a function reside in registers and which in memory. Often a non optimal, but fast allocation is preferred in JIT compilers as compilation time adds to execution time.
+[My project](https://summerofcode.withgoogle.com/projects/#4596557656096768) was implementing a register allocator for [libjit](https://www.gnu.org/software/libjit/). Register allocation is the process of determining which variables of a function reside in registers and which in memory. While working on my GSoC project I also wrote [a paper](https://i.m4gnus.de/registerallocation.pdf) which explains the theory behind writing a graph coloring based register allocator.
 
-All my commits done during GSoC as well as the code changed can be [viewed here](https://github.com/M4GNV5/libjit/compare/pre-gsoc...M4GNV5:gsoc)
+**All my commits done during GSoC as well as the code changed can be [viewed here](https://github.com/M4GNV5/libjit/compare/pre-gsoc...M4GNV5:gsoc)**
 
 ## Work summary
 - Implement computation of the liveness sets `UEVar`, `VarKill` and `LiveOut`.
@@ -20,15 +20,22 @@ All my commits done during GSoC as well as the code changed can be [viewed here]
 - Add a diagnostic function which dumps all live ranges of a function
 - Correctly move values into destination registers before instructions
 
+#### Unimplemented
+- The orginal Chaitin Briggs allocator has an additional step which coalesces live ranges. This is currently missing in libjit.
+- In libjit there are special "manual" instructions which manually perform register operations. Currently only ARM has manual instructions. The new register allocator is untested with them.
+
 ## Comparasion
+This repository contains various programs and scripts for comparing the the new and old register allocators. Their execution speed is then measured and visualized.
 
-This repository contains various programs and a shell script for compiling them with and without the new register allocator. Their execution speed is then measured and visualized. All programs contain loops with configurable iteration count. There are two comparasions: `Single Run` runs the program one time with a high iteration count, this is good at showing the performance improvement by the new register allocator. `Multiple Runs` runs the program many times with a low iteration count, this is good at showing the compilation time penalty of the new register allocator.
+### Mandelbrot
+The Mandelbrot fractal viewer is a good speed comparasion example, as it is a common program. The new allocator is approximately 35% faster.
+![](img/mandelbrot.png)
 
-#### Sum of numbers
-This program sums all numbers from 0 to n
+### Sum of numbers
+This program sums all numbers from 0 to n. The generated code looks nearly the same with both register allocators, so there is no real difference in execution speed.
 ![](img/sumOfNumbers.png)
 
-#### Constructed
-This is a program specifically constructed perform better with a good register allocator.
+### Constructed
+This is a program constructed to perform better with a good register allocator. The code does not do anything useful, but contains many values and basic blocks.
 ![](img/constructed.png)
 
