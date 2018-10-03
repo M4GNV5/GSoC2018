@@ -4,8 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <jit/jit.h>
-#include <jit/jit-dump.h>
 
 void jit_optimize(jit_function_t func);
 
